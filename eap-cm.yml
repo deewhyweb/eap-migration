@@ -1,0 +1,14 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: eap-config
+data: 
+  DATASOURCES: "TEST"
+  TEST_DATABASE: "books"
+  TEST_NAME: "mysql"
+  TEST_DRIVER: "mysql"
+  TEST_JNDI: "java:/jdbc/mysql"
+  TEST_USERNAME: "root"
+  TEST_PASSWORD: "root"
+  TEST_URL: "jdbc:mysql://mysql:3306/books"
+  TEST_NONXA: "true"

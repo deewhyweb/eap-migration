@@ -1,0 +1,10 @@
+apiVersion: wildfly.org/v1alpha1
+kind: WildFlyServer
+metadata:
+  name: kitchen-sink
+spec:
+  applicationImage: 'image-registry.openshift-image-registry.svc:5000/eap-webinar/eap-app:latest'
+  envFrom:
+    - configMapRef:
+        name: eap-config
+  replicas: 1
