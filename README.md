@@ -10,13 +10,13 @@ OpenShift cluster with JBoss EAP operator installed
 
 Deploy mysql
 
-`oc new-app  -e MYSQL_DATABASE=books -e MYSQL_ROOT_PASSWORD=root mysql-persistent `
+`oc new-app  -e MYSQL_DATABASE=books -e MYSQL_PASSWORD=demo -e MYSQL_USER=eap mysql-persistent `
 
 Log in to the Red Hat Container Registry using your Customer Portal credentials to import the JBoss EAP imagestreams and templates. For more information, see Red Hat Container Registry Authentication. https://access.redhat.com/RegistryAuthentication
 
 `oc create -f xxxxxx-secret.yaml`
 
-Import required Imanges
+Import required Images
 
 ```
 oc replace --force -f \
