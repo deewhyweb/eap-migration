@@ -1,10 +1,25 @@
-# eap-migration
+# Deploy EAP app to OpenShift with external db (MySQL)
 
-## pre-reqs
+This repository contains the deployment for the EAP application deployed to OpenShift with external database (MySQL).
 
-OpenShift cluster with JBoss EAP operator installed
+The EAP application code is maintained in https://github.com/deewhyweb/eap-quickstarts.git in the kitchensink folder.
 
-## Steps
+The OpenShift objects in this repository will create two build configs and image streams.
+
+1. Build the artifact image
+2. Build the EAP application image
+
+The first step is to build the artifact image, this is where the maven build of the EAP application is performed.
+
+The second step is to build the EAP application image, this is where the EAP runtime image is created including the artifcact built in the previous step.
+## pre-requisites
+
+* OpenShift cluster with JBoss EAP operator installed
+* Openshift command line tool installed and logged into cluster.
+
+## Steps to dep[oy EAP app to OpenShift
+
+Create the OpenShift project
 
 `oc new-project eap-webinar`
 
