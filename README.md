@@ -17,7 +17,7 @@ The second step is to build the EAP application image, this is where the EAP run
 * OpenShift cluster with JBoss EAP operator installed
 * Openshift command line tool installed and logged into cluster.
 
-## Steps to dep[oy EAP app to OpenShift
+## Steps to deploy EAP app to OpenShift
 
 Create the OpenShift project
 
