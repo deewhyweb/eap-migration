@@ -1,9 +1,0 @@
-kind: ImageStream
-apiVersion: image.openshift.io/v1
-metadata:
-  name: eap-app-build-artifacts
-  labels:
-    application: eap-app
-spec:
-  lookupPolicy:
-    local: false

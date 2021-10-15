@@ -1,0 +1,51 @@
+image:
+  tag: latest
+build:
+  enabled: true
+  mode: s2i
+  uri: 'https://github.com/deewhyweb/eap-quickstarts.git'
+  ref: 7.4.x
+  contextDir: kitchensink
+  pullSecret: my-pull-secret
+  output:
+    kind: ImageStreamTag
+  env:
+    - name: MAVEN_ARGS_APPEND
+      value: '-Dcom.redhat.xpaas.repo.jbossorg'
+    - name: CUSTOM_INSTALL_DIRECTORIES
+      value: extensions
+  triggers: {}
+  s2i:
+    version: latest
+    arch: amd64
+    jdk: '11'
+    amd64:
+      jdk8:
+        builderImage: registry.redhat.io/jboss-eap-7/eap74-openjdk8-openshift-rhel7
+        runtimeImage: registry.redhat.io/jboss-eap-7/eap74-openjdk8-runtime-openshift-rhel7
+      jdk11:
+        builderImage: registry.redhat.io/jboss-eap-7/eap74-openjdk11-openshift-rhel8
+        runtimeImage: registry.redhat.io/jboss-eap-7/eap74-openjdk11-runtime-openshift-rhel8
+deploy:
+  enabled: false
+  replicas: 1
+  route:
+    enabled: true
+    tls:
+      enabled: true
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+  livenessProbe:
+    exec:
+      command:
+        - /bin/bash
+        - '-c'
+        - /opt/eap/bin/livenessProbe.sh
+    initialDelaySeconds: 60
+  readinessProbe:
+    exec:
+      command:
+        - /bin/bash
+        - '-c'
+        - /opt/eap/bin/readinessProbe.sh
+    initialDelaySeconds: 10
