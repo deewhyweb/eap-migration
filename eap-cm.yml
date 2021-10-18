@@ -10,5 +10,5 @@ data:
   TEST_JNDI: "java:/jdbc/mysql"
   TEST_USERNAME: "eap"
   TEST_PASSWORD: "demo"
-  TEST_URL: "jdbc:mysql://mysql:3306/books"
+  TEST_URL: "jdbc:mysql://mysql:3306/eap"
   TEST_NONXA: "true"
