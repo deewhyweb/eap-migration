@@ -4,7 +4,7 @@ metadata:
   name: eap-config
 data: 
   DATASOURCES: "TEST"
-  TEST_DATABASE: "books"
+  TEST_DATABASE: "eap"
   TEST_NAME: "mysql"
   TEST_DRIVER: "mysql"
   TEST_JNDI: "java:/jdbc/mysql"

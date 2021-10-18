@@ -14,7 +14,7 @@ The first step is to build the artifact image, this is where the maven build of 
 The second step is to build the EAP application image, this is where the EAP runtime image is created including the artifcact built in the previous step.
 ## pre-requisites
 
-* OpenShift cluster with JBoss EAP operator installed
+* OpenShift cluster 
 * Openshift command line tool installed and logged into cluster.
 
 ## Steps to deploy EAP app to OpenShift
@@ -25,7 +25,7 @@ Create the OpenShift project
 
 Deploy mysql
 
-`oc new-app  -e MYSQL_DATABASE=books -e MYSQL_PASSWORD=demo -e MYSQL_USER=eap mysql-persistent `
+`oc new-app  -e MYSQL_DATABASE=eap -e MYSQL_PASSWORD=demo -e MYSQL_USER=eap mysql-persistent `
 
 Create a pull secret with your registry.redhat.io credentials
 
@@ -45,6 +45,9 @@ Wait for the two builds to complete, eap_app_build_artifacts and eap_app.  This 
 Create the config map with mysql environment variables;
 
 `oc create -f eap-cm.yml`
+
+Deploy the JBoss EAP operator
+`oc create -f eap-operator.yml`
 
 Deploy the instance of the eap application using the operator
 
