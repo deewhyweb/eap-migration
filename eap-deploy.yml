@@ -3,7 +3,7 @@ kind: WildFlyServer
 metadata:
   name: kitchen-sink
 spec:
-  applicationImage: 'kitchensink:latest'
+  applicationImage: 'eap74:latest'
   envFrom:
     - configMapRef:
         name: eap-config
