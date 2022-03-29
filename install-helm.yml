@@ -6,7 +6,6 @@ build:
   uri: 'https://github.com/deewhyweb/eap-quickstarts.git'
   ref: 7.4.x
   contextDir: kitchensink
-  pullSecret: my-pull-secret
   output:
     kind: ImageStreamTag
   env:

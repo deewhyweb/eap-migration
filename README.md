@@ -27,9 +27,6 @@ Deploy mysql
 
 `oc new-app  -e MYSQL_DATABASE=eap -e MYSQL_PASSWORD=demo -e MYSQL_USER=eap mysql-persistent `
 
-Create a pull secret with your registry.redhat.io credentials
-
-`oc create secret docker-registry my-pull-secret --docker-server=registry.redhat.io --docker-username=$USERNAME --docker-password=$PASSWORD --docker-email=$EMAIL`
 
 
 Install the helm cli following these instructions https://helm.sh/docs/intro/install/
