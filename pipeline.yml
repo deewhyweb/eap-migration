@@ -1,0 +1,95 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: maven-pipeline
+spec:
+  workspaces:
+    - name: shared-workspace
+    - name: maven-settings
+    - name: kubeconfig-dir
+      optional: true
+  params:
+    - name: repo-url
+    - name: revision
+    - name: context-path
+  tasks:
+    - name: fetch-repo
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: url
+          value: "$(params.repo-url)"
+        - name: subdirectory
+          value: ""
+        - name: deleteExisting
+          value: "true"
+        - name: revision
+          value: $(params.revision)
+    - name: mvn-build
+      taskRef:
+        name: maven
+      runAfter:
+        - fetch-repo
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+        - name: maven-settings
+          workspace: maven-settings
+      params:
+        - name: CONTEXT_DIR
+          value: "$(params.context-path)"
+        - name: GOALS
+          value: ["-DskipTests", "clean", "compile"]
+    - name: mvn-tests
+      taskRef:
+        name: maven
+      runAfter:
+        - mvn-build
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+        - name: maven-settings
+          workspace: maven-settings
+      params:
+        - name: CONTEXT_DIR
+          value: "$(params.context-path)"
+        - name: GOALS
+          value: ["test"]
+    - name: mvn-package
+      taskRef:
+        name: maven
+      runAfter:
+        - mvn-tests
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+        - name: maven-settings
+          workspace: maven-settings
+      params:
+        - name: CONTEXT_DIR
+          value: "$(params.context-path)"
+        - name: GOALS
+          value: ["package"]
+    - name: create-image-and-deploy
+      taskRef:
+        name: openshift-client
+      runAfter:
+        - mvn-package
+      workspaces:
+        - name: manifest-dir
+          workspace: shared-workspace
+        - name: kubeconfig-dir
+          workspace: kubeconfig-dir
+      params:
+        - name: SCRIPT
+          value: |
+            cd "$(params.context-path)"
+            cd ..
+            mkdir -p ./artifacts/deployments && cp ./kitchensink/target/* ./artifacts/
+            mkdir -p ./artifacts/kitchensink/extensions && cp -r  ./kitchensink/extensions/* ./artifacts/kitchensink/extensions
+            mkdir -p ./artifacts/kitchensink/modules && cp -r  ./kitchensink/modules/* ./artifacts/kitchensink/modules
+            oc project eap-webinar
+            oc start-build eap74-build-artifacts --from-dir=artifacts/
