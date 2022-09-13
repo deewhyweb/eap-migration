@@ -88,8 +88,8 @@ spec:
           value: |
             cd "$(params.context-path)"
             cd ..
-            mkdir -p ./artifacts/deployments && cp ./kitchensink/target/* ./artifacts/
+            mkdir -p ./artifacts/kitchensink/deployments && cp ./kitchensink/target/kitchensink.war ./artifacts/kitchensink/deployments/ROOT.war
             mkdir -p ./artifacts/kitchensink/extensions && cp -r  ./kitchensink/extensions/* ./artifacts/kitchensink/extensions
             mkdir -p ./artifacts/kitchensink/modules && cp -r  ./kitchensink/modules/* ./artifacts/kitchensink/modules
             oc project eap-webinar
-            oc start-build eap74-build-artifacts --from-dir=artifacts/
+            oc start-build eap74-build-artifacts --from-dir=artifacts/ --follow
