@@ -55,3 +55,4 @@ Navigate to the route to test out the application.
 
 
 
+oc expose svc el-eap-app-listener

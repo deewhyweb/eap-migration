@@ -1,0 +1,10 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: Trigger
+metadata:
+  name: eap-app-trigger
+spec:
+  serviceAccountName: pipeline
+  bindings:
+    - ref: eap-app-binding
+  template:
+    ref: eap-app-template

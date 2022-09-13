@@ -1,0 +1,8 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: eap-app-listener
+spec:
+  serviceAccountName: pipeline
+  triggers:
+    - triggerRef: eap-app-trigger
