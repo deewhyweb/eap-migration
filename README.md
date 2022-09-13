@@ -107,10 +107,7 @@ Test the event listener route
 `export eventhost=$(oc get route el-eap-app-listener -o custom-columns=host:spec.host --no-headers)`
 
 ```
-curl -X POST \
-  http://$eventhost \
-  -H 'Content-Type: application/json' \
-  -d '{ "commit_sha": "22ac84e04fd2bd9dce8529c9109d5bfd61678b29",  "repository": {"url": "https://github.com/deewhyweb/eap-quickstarts.git", "name": "eap-migration"}}'
+curl -X POST   http://$eventhost   -H 'Content-Type: application/json'   -d '{ "commit_sha": "22ac84e04fd2bd9dce8529c9109d5bfd61678b29",  "repository": {"url": "https://github.com/deewhyweb/eap-quickstarts.git", "name": "eap-migration"},"head_commit":{ "id":"7.4.x"}}'
 ```
 
 ## Triggering the pipeline from Github
