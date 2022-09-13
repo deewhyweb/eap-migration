@@ -20,9 +20,9 @@ spec:
     spec:
       params:
         - name: repo-url
-          value: 'https://github.com/deewhyweb/eap-quickstarts.git'
+          value: $(tt.params.git-repo-url)
         - name: revision
-          value: 7.4.x
+          value: $(tt.params.git-revision)
         - name: context-path
           value: kitchensink
       pipelineRef:
@@ -31,7 +31,12 @@ spec:
       timeout: 1h0m0s
       workspaces:
         - name: shared-workspace
-          persistentVolumeClaim:
-            claimName: tekton
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 1000Mi
         - emptyDir: {}
           name: maven-settings
